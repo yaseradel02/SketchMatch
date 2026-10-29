@@ -1,0 +1,32 @@
+# Quick, Draw! raw downloads (large and not required for submission)
+data/raw/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local environment variables and Streamlit secrets
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Build / package artifacts
+build/
+dist/
+*.egg-info/
