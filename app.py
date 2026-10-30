@@ -66,24 +66,30 @@ def clear_canvas():
 if mode == "Draw":
     st.subheader("Draw your doodle")
 
-    canvas = st_canvas(
-        stroke_width=10,
-        stroke_color="#000000",
-        background_color="#FFFFFF",
-        height=350,
-        width=350,
-        drawing_mode="freedraw",
-        update_streamlit=True,
-        return_image_data=True,
-        key=f"canvas_{st.session_state.canvas_version}"
-    )
+    draw_column, preview_column = st.columns([3, 2])
 
-    if canvas.image_data is not None:
-        query_image = np.asarray(
-            canvas.image_data, dtype=np.uint8
+    with draw_column:
+        canvas = st_canvas(
+            stroke_width=10,
+            stroke_color="#000000",
+            background_color="#FFFFFF",
+            height=350,
+            width=350,
+            drawing_mode="freedraw",
+            update_streamlit=True,
+            return_image_data=True,
+            key=f"canvas_{st.session_state.canvas_version}"
         )
 
-    st.button("Clear Canvas", on_click=clear_canvas)
+        if canvas.image_data is not None:
+            query_image = np.asarray(
+                canvas.image_data, dtype=np.uint8
+            )
+
+        st.button("Clear Canvas", on_click=clear_canvas)
+
+    with preview_column:
+        preview_placeholder = st.empty()
 
 elif mode == "Upload":
     uploaded_file = st.file_uploader(
@@ -129,6 +135,11 @@ if find_clicked and query_image is not None:
 
     processed_image = np.asarray(processed_image)
 
+    # Display the processed drawing next to the canvas only after Find is clicked.
+    if mode == "Draw":
+        with preview_placeholder.container():
+            st.write("Preprocessed Drawing (28×28)")
+            st.image(processed_image, width=150, clamp=True)
 
     # 7. Check whether index files are available
     required_files = [
