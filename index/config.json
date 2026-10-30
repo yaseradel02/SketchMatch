@@ -1,0 +1,13 @@
+{
+    "model_name": "MobileNetV2",
+    "weights": "imagenet",
+    "input_size": [
+        128,
+        128
+    ],
+    "embedding_dim": 1280,
+    "gallery_size": 4050,
+    "invert": true,
+    "top_k": 25,
+    "threshold": 0.75
+}
