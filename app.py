@@ -92,25 +92,37 @@ if mode == "Draw":
         preview_placeholder = st.empty()
 
 elif mode == "Upload":
-    uploaded_file = st.file_uploader(
-        "Upload your drawing",
-        type=["png", "jpg", "jpeg"]
-    )
+    input_column, preview_column = st.columns([3, 2])
 
-    if uploaded_file is not None:
-        query_image = np.array(
-            Image.open(uploaded_file).convert("RGBA")
+    with input_column:
+        uploaded_file = st.file_uploader(
+            "Upload your drawing",
+            type=["png", "jpg", "jpeg"]
         )
+
+        if uploaded_file is not None:
+            query_image = np.array(
+                Image.open(uploaded_file).convert("RGBA")
+            )
+
+    with preview_column:
+        preview_placeholder = st.empty()
 
 elif mode == "Camera":
-    camera_photo = st.camera_input(
-        "Take a photo of your drawing"
-    )
+    input_column, preview_column = st.columns([3, 2])
 
-    if camera_photo is not None:
-        query_image = np.array(
-            Image.open(camera_photo).convert("RGBA")
+    with input_column:
+        camera_photo = st.camera_input(
+            "Take a photo of your drawing"
         )
+
+        if camera_photo is not None:
+            query_image = np.array(
+                Image.open(camera_photo).convert("RGBA")
+            )
+
+    with preview_column:
+        preview_placeholder = st.empty()
 
 
 # Find button: search only when clicked
@@ -135,11 +147,10 @@ if find_clicked and query_image is not None:
 
     processed_image = np.asarray(processed_image)
 
-    # Display the processed drawing next to the canvas only after Find is clicked.
-    if mode == "Draw":
-        with preview_placeholder.container():
-            st.write("Preprocessed Drawing (28×28)")
-            st.image(processed_image, width=150, clamp=True)
+    # Display the processed image beside the input, only after Find is clicked.
+    with preview_placeholder.container():
+        st.write("Preprocessed Drawing (28×28)")
+        st.image(processed_image, width=150, clamp=True)
 
     # 7. Check whether index files are available
     required_files = [
