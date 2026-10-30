@@ -3,6 +3,9 @@
 ## Overview
 SketchMatch is a Streamlit application that finds drawings similar to a user's sketch using the Google Quick, Draw! dataset and a pretrained MobileNetV2 model. It displays similar doodles instead of predicting a category label.
 
+## Live App
+[Try SketchMatch](https://sketch-match.streamlit.app/)
+
 ## Objective
 Build an image similarity search engine using pretrained image embeddings and cosine similarity, without training or fine-tuning a model.
 
